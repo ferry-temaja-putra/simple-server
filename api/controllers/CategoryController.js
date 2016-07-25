@@ -8,7 +8,16 @@
 var CategoryEventHandler = require('../events/CategoryEventHandler.js');
 var DomainEvents = require('../events/DomainEvents.js');
 
+var CategoryCommandHandler = require('../commands/CategoryCommandHandler.js');
+var DomainCommands = require('../commands/DomainCommands.js');
+
 module.exports = {
 
+    addCategory: function (req, res) {        
+        DomainCommands.handle(CategoryCommandHandler.addCategoryCommand, req.body)(function (err, created) {
+            if (err) return res.negotiate(err);
+            return res.ok(created);
+        });
+    }
 };
 
