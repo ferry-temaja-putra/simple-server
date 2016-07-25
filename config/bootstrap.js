@@ -11,6 +11,10 @@
 
 var ProductEvent = require('../api/events/ProductEvent.js');
 var ProductEventHandler = require('../api/events/ProductEventHandler.js');
+
+var CategoryEvent = require('../api/events/CategoryEvent.js');
+var CategoryEventHandler = require('../api/events/CategoryEventHandler.js');
+
 var DomainEvents = require('../api/events/DomainEvents.js');
 
 var CategoryCommand = require('../api/commands/CategoryCommand.js');
@@ -36,6 +40,7 @@ module.exports.bootstrap = function(cb) {
   DomainCommands.addHandler(ProductCommand.listProductCommand, ProductCommandHandler.listProduct);
 
   DomainEvents.addHandler(ProductEvent.inventoryAddedEvent, ProductEventHandler.inventoryAdded);
-  
+  DomainEvents.addHandler(CategoryEvent.categoryRemovedEvent, CategoryEventHandler.categoryRemoved);
+
   cb();
 };

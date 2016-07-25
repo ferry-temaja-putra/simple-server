@@ -38,5 +38,19 @@ module.exports = {
             if (err) return callback(err);
             return callback(null, results);
         });        
+    },
+
+    getChildCategories: function (parentId, callback) {
+        Category.find({parent: parentId}).exec(function (err, results) {
+            if (err) return callback(err);
+            return callback(null, results);
+        })
+    },
+
+    resetChildCategoryParent: function (categoryIds, callback) {
+        Category.update(categoryIds, {parent: 0}).exec(function (err, results) {
+            if (err) return callback(err);
+            return callback(null, results);
+        });
     }
 };

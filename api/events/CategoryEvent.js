@@ -1,0 +1,3 @@
+module.exports = {
+    categoryRemovedEvent: 'categoryRemovedEvent'
+};

@@ -1,4 +1,6 @@
 var Repository = require('../repositories/CategoryRepository.js');
+var CategoryEvent = require('../events/CategoryEvent.js');
+var DomainEvents = require('../events/DomainEvents.js');
 
 module.exports = {
 
@@ -14,7 +16,14 @@ module.exports = {
     },
 
     removeCategory: function (commandArgs, callback) {
-        return Repository.removeCategory(commandArgs, callback);
+        var removedCategoryId = commandArgs;
+
+        return Repository.removeCategory(commandArgs, function (err) {
+            if (err) return callback(err);
+
+            DomainEvents.publishEvent(CategoryEvent.categoryRemovedEvent, removedCategoryId);
+            return callback(null);
+        });
     },
 
     listCategory: function (commandArgs, callback) {          
