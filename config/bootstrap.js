@@ -8,7 +8,7 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
-var CategoryEventHandler = require('../api/events/CategoryEventHandler.js');
+
 var DomainEvents = require('../api/events/DomainEvents.js');
 
 var CategoryCommand = require('../api/commands/CategoryCommand.js');
