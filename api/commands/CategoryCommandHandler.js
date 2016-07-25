@@ -1,4 +1,4 @@
-var Repository = require('../repositories/categoryrepository.js');
+var Repository = require('../repositories/CategoryRepository.js');
 
 module.exports = {
 
@@ -11,10 +11,10 @@ module.exports = {
         if (data.name == undefined || data.name == '') {
             return callback(new Error('category name is mandatory!'));
         }
-        return Repository.add(commandArgs, callback);
+        return Repository.addCategory(commandArgs, callback);
     },
 
-    listCategory: function (commandArgs, callback) {
-        return Repository.list(commandArgs, callback);
+    listCategory: function (commandArgs, callback) {                
+        return Repository.listCategory(callback);
     }
 };
