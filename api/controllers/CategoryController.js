@@ -5,9 +5,6 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var CategoryEventHandler = require('../events/CategoryEventHandler.js');
-var DomainEvents = require('../events/DomainEvents.js');
-
 var CategoryCommand = require('../commands/CategoryCommand.js');
 var DomainCommands = require('../commands/DomainCommands.js');
 
