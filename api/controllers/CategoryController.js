@@ -9,9 +9,6 @@ var CategoryEventHandler = require('../events/CategoryEventHandler.js');
 var DomainEvents = require('../events/DomainEvents.js');
 
 module.exports = {
-	hello: function (req, res) {
-        DomainEvents.publishEvent(CategoryEventHandler.helloEvent, 'hello');
-        res.ok('event handled');
-    }
+
 };
 
