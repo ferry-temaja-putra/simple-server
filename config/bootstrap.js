@@ -21,6 +21,7 @@ module.exports.bootstrap = function(cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
       
   DomainCommands.addHandler(CategoryCommand.addCategoryCommand, CategoryCommandHandler.addCategory);
+  DomainCommands.addHandler(CategoryCommand.addChildCategoryCommand, CategoryCommandHandler.addChildCategory);
   DomainCommands.addHandler(CategoryCommand.listCategoryCommand, CategoryCommandHandler.listCategory);
 
   cb();

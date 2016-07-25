@@ -10,8 +10,23 @@ var DomainCommands = require('../commands/DomainCommands.js');
 
 module.exports = {
 
-    addCategory: function (req, res) {        
-        DomainCommands.handle(CategoryCommand.addCategoryCommand, req.body, function (err, created) {
+    addCategory: function (req, res) {
+        var categoryName = req.body.categoryName;
+
+        DomainCommands.handle(CategoryCommand.addCategoryCommand, categoryName, function (err, created) {
+            if (err) return res.negotiate(err);
+            return res.ok(created);
+        });
+    },
+
+    addChildCategory: function (req, res) {
+
+        var args = {
+            parent: req.body.parent,
+            data: req.body.data
+        };
+
+        DomainCommands.handle(CategoryCommand.addChildCategoryCommand, args, function (err, created) {
             if (err) return res.negotiate(err);
             return res.ok(created);
         });

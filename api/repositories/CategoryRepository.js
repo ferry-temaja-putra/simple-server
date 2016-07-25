@@ -1,6 +1,12 @@
 module.exports = {
-    addCategory: function (data, callback) {
-        Category.create(data).exec(function (err, created) {
+    addCategory: function (categoryName, callback) {
+        
+        var newCategory = {
+            name: categoryName,
+            parent: 0
+        };
+
+        Category.create(newCategory).exec(function (err, created) {
             if (err) return callback(err);
             return callback(null, created);
         });

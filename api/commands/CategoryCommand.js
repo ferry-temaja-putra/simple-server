@@ -1,4 +1,5 @@
 module.exports = {
     addCategoryCommand: 'addCategoryCommand',
-    listCategoryCommand: 'listCategoryCommand'    
+    listCategoryCommand: 'listCategoryCommand',
+    addChildCategoryCommand: 'addChildCategoryCommand'    
 };
