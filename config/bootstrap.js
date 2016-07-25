@@ -9,6 +9,8 @@
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
 
+var ProductEvent = require('../api/events/ProductEvent.js');
+var ProductEventHandler = require('../api/events/ProductEventHandler.js');
 var DomainEvents = require('../api/events/DomainEvents.js');
 
 var CategoryCommand = require('../api/commands/CategoryCommand.js');
@@ -24,5 +26,7 @@ module.exports.bootstrap = function(cb) {
   DomainCommands.addHandler(CategoryCommand.addChildCategoryCommand, CategoryCommandHandler.addChildCategory);
   DomainCommands.addHandler(CategoryCommand.listCategoryCommand, CategoryCommandHandler.listCategory);
 
+  DomainEvents.addHandler(ProductEvent.inventoryAddedEvent, ProductEventHandler.inventoryAdded);
+  
   cb();
 };
