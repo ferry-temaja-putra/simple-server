@@ -14,14 +14,14 @@ var DomainCommands = require('../commands/DomainCommands.js');
 module.exports = {
 
     addCategory: function (req, res) {        
-        DomainCommands.handle(CategoryCommandHandler.addCategoryCommand, req.body)(function (err, created) {
+        DomainCommands.handle(CategoryCommandHandler.addCategoryCommand, req.body, function (err, created) {
             if (err) return res.negotiate(err);
             return res.ok(created);
         });
     },
 
     listCategory: function (req, res) {        
-        DomainCommands.handle(CategoryCommandHandler.listCategoryCommand, null)(function (err, results) {
+        DomainCommands.handle(CategoryCommandHandler.listCategoryCommand, {}, function (err, results) {
             if (err) return res.negotiate(err);
             return res.json(results);
         });

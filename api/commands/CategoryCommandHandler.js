@@ -14,7 +14,8 @@ module.exports = {
         return Repository.addCategory(commandArgs, callback);
     },
 
-    listCategory: function (commandArgs, callback) {                
+    listCategory: function (commandArgs, callback) {  
+        // console.log(Repository);              
         return Repository.listCategory(callback);
     }
 };

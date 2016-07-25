@@ -6,7 +6,7 @@ module.exports = {
         commands[command] = callback;
     },
 
-    handle: function (command, commandArgs) {
-        return commands[command](commandArgs);
+    handle: function (command, commandArgs, callback) {
+        return commands[command](commandArgs, callback);
     }
 };

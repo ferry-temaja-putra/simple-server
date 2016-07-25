@@ -1,4 +1,4 @@
-module.expors = {
+module.exports = {
     addCategory: function (data, callback) {
         Category.create(data).exec(function (err, created) {
             if (err) return callback(err);
