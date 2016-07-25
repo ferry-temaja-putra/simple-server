@@ -35,5 +35,26 @@ module.exports = {
             if (err) return callback(err);
             return callback(null, results);
         });
+    },
+
+    removeProduct: function (productId, callback) {
+        Product.destroy({id: productId}).exec(function (err) {
+            if (err) return callback(err);
+            return callback(null);
+        });
+    },
+
+    removeInventory: function (productId, callback) {
+        Inventory.destroy({product: productId}).exec(function (err) {
+            if (err) return callback(err);
+            return callback(null);
+        });
+    },
+
+    removeProductForRead: function (productId, callback) {
+        Productread.destroy({product: productId}).exec(function (err) {
+            if (err) return callback(err);
+            return callback(null);
+        });
     }
 };

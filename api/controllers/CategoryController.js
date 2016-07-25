@@ -37,7 +37,7 @@ module.exports = {
 
         DomainCommands.handle(CategoryCommand.removeCategoryCommand, categoryId, function (err, created) {
             if (err) return res.negotiate(err);
-            return res.ok('category deleted');
+            return res.ok('category is deleted');
         });
     },
 

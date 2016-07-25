@@ -38,8 +38,10 @@ module.exports.bootstrap = function(cb) {
   DomainCommands.addHandler(ProductCommand.addProductCommand, ProductCommandHandler.addProduct);
   DomainCommands.addHandler(ProductCommand.addInventoryCommand, ProductCommandHandler.addInventory);
   DomainCommands.addHandler(ProductCommand.listProductCommand, ProductCommandHandler.listProduct);
+  DomainCommands.addHandler(ProductCommand.removeProductCommand, ProductCommandHandler.removeProduct);
 
   DomainEvents.addHandler(ProductEvent.inventoryAddedEvent, ProductEventHandler.inventoryAdded);
+  DomainEvents.addHandler(ProductEvent.productRemovedEvent, ProductEventHandler.productRemoved);
   DomainEvents.addHandler(CategoryEvent.categoryRemovedEvent, CategoryEventHandler.categoryRemoved);
 
   cb();

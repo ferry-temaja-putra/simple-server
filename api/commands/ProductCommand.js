@@ -1,5 +1,6 @@
 module.exports = {
     addProductCommand: 'addProductCommand',
     addInventoryCommand: 'addInventoryCommand',
-    listProductCommand: 'listProductCommand'
+    listProductCommand: 'listProductCommand',
+    removeProductCommand: 'removeProductCommand'
 };

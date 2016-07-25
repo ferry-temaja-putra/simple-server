@@ -19,5 +19,16 @@ module.exports = {
 
     listProduct: function (commandArgs, callback) {
         return Repository.listProduct(commandArgs, callback);
-    }
+    },
+
+    removeProduct: function (commandArgs, callback) {
+        var removedProductId = commandArgs;
+
+        return Repository.removeProduct(commandArgs, function (err) {
+            if (err) return callback(err);
+
+            DomainEvents.publishEvent(ProductEvent.productRemovedEvent, removedProductId);
+            return callback(null);
+        });
+    },
 };

@@ -23,5 +23,10 @@ module.exports = {
                 return created;
             })            
         });
+    },
+
+    productRemoved: function (removedProductId) {
+        Repository.removeInventory(removedProductId, function (err) {});
+        Repository.removeProductForRead(removedProductId, function (err) {});
     }
 }

@@ -1,3 +1,4 @@
 module.exports = {
-    inventoryAddedEvent: 'inventoryAddedEvent'
+    inventoryAddedEvent: 'inventoryAddedEvent',
+    productRemovedEvent: 'productRemovedEvent'
 };

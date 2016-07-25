@@ -65,6 +65,15 @@ module.exports = {
             if (err) return res.negotiate(err);
             return res.json(results);
         });
+    },
+
+    removeProduct: function (req, res) {
+        var productId = req.body.productId;
+
+        DomainCommands.handle(ProductCommand.removeProductCommand, productId, function (err, created) {
+            if (err) return res.negotiate(err);
+            return res.ok('product is deleted');
+        });
     }
 };
 
