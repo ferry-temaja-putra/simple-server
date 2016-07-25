@@ -26,6 +26,13 @@ module.exports = {
         });
     },
 
+    removeCategory: function (categoryId, callback) {
+        Category.destroy({id: categoryId}).exec(function (err) {
+            if (err) return callback(err);
+            return callback(null);
+        });
+    },
+
     listCategory: function (callback) {
         Category.find().exec(function (err, results) {
             if (err) return callback(err);

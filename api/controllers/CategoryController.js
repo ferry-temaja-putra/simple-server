@@ -32,6 +32,15 @@ module.exports = {
         });
     },
 
+    removeCategory: function (req, res) {
+        var categoryId = req.body.categoryId;
+
+        DomainCommands.handle(CategoryCommand.removeCategoryCommand, categoryId, function (err, created) {
+            if (err) return res.negotiate(err);
+            return res.ok('category deleted');
+        });
+    },
+
     listCategory: function (req, res) {        
         DomainCommands.handle(CategoryCommand.listCategoryCommand, {}, function (err, results) {
             if (err) return res.negotiate(err);

@@ -13,6 +13,10 @@ module.exports = {
         return Repository.addChildCategory(parent, childCategoryName, callback);
     },
 
+    removeCategory: function (commandArgs, callback) {
+        return Repository.removeCategory(commandArgs, callback);
+    },
+
     listCategory: function (commandArgs, callback) {          
         return Repository.listCategory(callback);
     }

@@ -28,6 +28,7 @@ module.exports.bootstrap = function(cb) {
       
   DomainCommands.addHandler(CategoryCommand.addCategoryCommand, CategoryCommandHandler.addCategory);
   DomainCommands.addHandler(CategoryCommand.addChildCategoryCommand, CategoryCommandHandler.addChildCategory);
+  DomainCommands.addHandler(CategoryCommand.removeCategoryCommand, CategoryCommandHandler.removeCategory);
   DomainCommands.addHandler(CategoryCommand.listCategoryCommand, CategoryCommandHandler.listCategory);
 
   DomainCommands.addHandler(ProductCommand.addProductCommand, ProductCommandHandler.addProduct);
