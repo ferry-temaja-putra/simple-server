@@ -15,5 +15,9 @@ module.exports = {
             DomainEvents.publishEvent(ProductEvent.inventoryAddedEvent, created);
             return callback(null, created);
         });
+    },
+
+    listProduct: function (commandArgs, callback) {
+        return Repository.listProduct(commandArgs, callback);
     }
 };

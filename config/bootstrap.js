@@ -33,6 +33,7 @@ module.exports.bootstrap = function(cb) {
 
   DomainCommands.addHandler(ProductCommand.addProductCommand, ProductCommandHandler.addProduct);
   DomainCommands.addHandler(ProductCommand.addInventoryCommand, ProductCommandHandler.addInventory);
+  DomainCommands.addHandler(ProductCommand.listProductCommand, ProductCommandHandler.listProduct);
 
   DomainEvents.addHandler(ProductEvent.inventoryAddedEvent, ProductEventHandler.inventoryAdded);
   

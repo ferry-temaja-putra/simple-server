@@ -28,5 +28,12 @@ module.exports = {
             if (err) return callback(err);
             return callback(null, created);
         });
+    },
+
+    listProduct: function (filter, callback) {
+        Productread.find(filter).exec(function (err, results) {
+            if (err) return callback(err);
+            return callback(null, results);
+        });
     }
 };
