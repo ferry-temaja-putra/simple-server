@@ -16,5 +16,12 @@ module.exports = {
             return res.ok(created);
         });
     },
+
+    addInventory: function (req, res) {
+        DomainCommands.handle(ProductCommand.addInventoryCommand, req.body, function (err, created) {
+            if (err) return res.negotiate(err);
+            return res.ok(created);
+        });
+    }
 };
 

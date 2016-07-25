@@ -7,7 +7,7 @@ module.exports = {
         });
     },
 
-    addInventory: function (product, newInventory, callback) {        
+    addInventory: function (newInventory, callback) {        
         Inventory.create(newInventory).exec(function (err, created) {
            if (err) return callback(err);
            return callback(null, created); 
