@@ -4,5 +4,12 @@ module.expors = {
             if (err) return callback(err);
             return callback(null, created);
         });
+    },
+
+    list: function (callback) {
+        Category.find().exec(function (err, results) {
+            if (err) return callback(err);
+            return callback(null, results);
+        });
     }
 };

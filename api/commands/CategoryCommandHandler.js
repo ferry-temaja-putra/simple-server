@@ -3,11 +3,18 @@ var Repository = require('../repositories/categoryrepository.js');
 module.exports = {
 
     addCategoryCommand: 'addCategoryCommand',
+    listCategoryCommand: 'listCategoryCommand',
 
-    addCategory: function (commandArgs, callback) {        
-        if (commandArgs.name == undefined || commandArgs.name == '') {
+    addCategory: function (commandArgs, callback) {
+        var data = commandArgs;
+
+        if (data.name == undefined || data.name == '') {
             return callback(new Error('category name is mandatory!'));
         }
-        return Repository.addCategory(commandArgs, callback);
+        return Repository.add(commandArgs, callback);
+    },
+
+    listCategory: function (commandArgs, callback) {
+        return Repository.list(commandArgs, callback);
     }
 };

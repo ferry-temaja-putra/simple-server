@@ -18,6 +18,13 @@ module.exports = {
             if (err) return res.negotiate(err);
             return res.ok(created);
         });
+    },
+
+    listCategory: function (req, res) {        
+        DomainCommands.handle(CategoryCommandHandler.listCategoryCommand, null)(function (err, results) {
+            if (err) return res.negotiate(err);
+            return res.json(results);
+        });
     }
 };
 
