@@ -12,6 +12,7 @@ module.exports = {
                 name: product.name,
                 description: product.description,
                 category: product.category.name,
+                inventory: addedInventory.id,
                 size: addedInventory.size,
                 color: addedInventory.color,
                 price: addedInventory.price

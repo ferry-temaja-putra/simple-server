@@ -9,6 +9,7 @@ module.exports = {
 
   attributes: {
     product: 'integer',
+    inventory: 'integer',
     name: 'string',
     description: 'string',
     category: 'string',
