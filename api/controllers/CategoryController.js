@@ -23,7 +23,7 @@ module.exports = {
 
         var args = {
             parent: req.body.parent,
-            data: req.body.data
+            childCategoryName: req.body.childCategoryName
         };
 
         DomainCommands.handle(CategoryCommand.addChildCategoryCommand, args, function (err, created) {

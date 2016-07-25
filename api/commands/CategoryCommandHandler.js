@@ -8,10 +8,9 @@ module.exports = {
 
     addChildCategory: function (commandArgs, callback) {
         var parent = commandArgs.parent; 
-        var data = commandArgs.data;
+        var childCategoryName = commandArgs.childCategoryName;
 
-        data.parent = parent;
-        return Repository.addCategory(data, callback);
+        return Repository.addChildCategory(parent, childCategoryName, callback);
     },
 
     listCategory: function (commandArgs, callback) {          
