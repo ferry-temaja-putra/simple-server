@@ -15,6 +15,10 @@ var DomainEvents = require('../api/events/DomainEvents.js');
 
 var CategoryCommand = require('../api/commands/CategoryCommand.js');
 var CategoryCommandHandler = require('../api/commands/CategoryCommandHandler.js');
+
+var ProductCommand = require('../api/commands/ProductCommand.js');
+var ProductCommandHandler = require('../api/commands/ProductCommandHandler.js');
+
 var DomainCommands = require('../api/commands/DomainCommands.js');
 
 module.exports.bootstrap = function(cb) {
@@ -25,6 +29,9 @@ module.exports.bootstrap = function(cb) {
   DomainCommands.addHandler(CategoryCommand.addCategoryCommand, CategoryCommandHandler.addCategory);
   DomainCommands.addHandler(CategoryCommand.addChildCategoryCommand, CategoryCommandHandler.addChildCategory);
   DomainCommands.addHandler(CategoryCommand.listCategoryCommand, CategoryCommandHandler.listCategory);
+
+  DomainCommands.addHandler(ProductCommand.addProductCommand, ProductCommandHandler.addProduct);
+  DomainCommands.addHandler(ProductCommand.addInventoryCommand, ProductCommandHandler.addInventory);
 
   DomainEvents.addHandler(ProductEvent.inventoryAddedEvent, ProductEventHandler.inventoryAdded);
   
