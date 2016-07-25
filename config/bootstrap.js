@@ -11,6 +11,7 @@
 var CategoryEventHandler = require('../api/events/CategoryEventHandler.js');
 var DomainEvents = require('../api/events/DomainEvents.js');
 
+var CategoryCommand = require('../api/commands/CategoryCommand.js');
 var CategoryCommandHandler = require('../api/commands/CategoryCommandHandler.js');
 var DomainCommands = require('../api/commands/DomainCommands.js');
 
@@ -19,8 +20,8 @@ module.exports.bootstrap = function(cb) {
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
       
-  DomainCommands.addHandler(CategoryCommandHandler.addCategoryCommand, CategoryCommandHandler.addCategory);
-  DomainCommands.addHandler(CategoryCommandHandler.listCategoryCommand, CategoryCommandHandler.listCategory);
+  DomainCommands.addHandler(CategoryCommand.addCategoryCommand, CategoryCommandHandler.addCategory);
+  DomainCommands.addHandler(CategoryCommand.listCategoryCommand, CategoryCommandHandler.listCategory);
 
   cb();
 };

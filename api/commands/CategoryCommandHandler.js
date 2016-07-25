@@ -2,9 +2,6 @@ var Repository = require('../repositories/CategoryRepository.js');
 
 module.exports = {
 
-    addCategoryCommand: 'addCategoryCommand',
-    listCategoryCommand: 'listCategoryCommand',
-
     addCategory: function (commandArgs, callback) {
         var data = commandArgs;
 
@@ -14,8 +11,7 @@ module.exports = {
         return Repository.addCategory(commandArgs, callback);
     },
 
-    listCategory: function (commandArgs, callback) {  
-        // console.log(Repository);              
+    listCategory: function (commandArgs, callback) {          
         return Repository.listCategory(callback);
     }
 };
