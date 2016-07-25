@@ -4,25 +4,23 @@ module.exports = {
     
     inventoryAdded: function (addedInventory) {
 
-        Product.findOne({id: addedInventory.product})
-        .populate('category')
-        .exec(function (err, result) {
+        Repository.getProduct(addedInventory.product, function (err, product) {
             if (err) return err;
             
-            var newRecord = {
-                product: result.id,
-                name: result.name,
-                description: result.description,
-                category: result.category.name,
+            var productForRead = {
+                product: product.id,
+                name: product.name,
+                description: product.description,
+                category: product.category.name,
                 size: addedInventory.size,
                 color: addedInventory.color,
                 price: addedInventory.price
             };
 
-            Productread.create(newRecord).exec(function (err, created) {
+            Repository.addProductForRead(productForRead, function (err, created) {
                 if (err) return err;
                 return created;
-            });
+            })            
         });
     }
 }

@@ -14,6 +14,15 @@ module.exports = {
         });
     },
 
+    getProduct: function (productId, callback) {
+        Product.findOne({id: productId})
+        .populate('category')
+        .exec(function (err, created) {
+            if (err) return callback(err);
+            return callback(null, created);
+        });
+    },
+    
     addProductForRead: function (newProductForRead, callback) {
         Productread.create(newProductForRead).exec(function (err, created) {
             if (err) return callback(err);
