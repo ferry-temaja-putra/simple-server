@@ -20,6 +20,7 @@ module.exports.bootstrap = function(cb) {
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   
   DomainEvents.addHandler(CategoryEventHandler.helloEvent, CategoryEventHandler.handleHello);  
-
+  DomainCommands.addHandler(CategoryCommandHandler.addCategoryCommand, CategoryCommandHandler.addCategory);
+  
   cb();
 };
