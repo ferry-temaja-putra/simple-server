@@ -1,4 +1,5 @@
 var request = require('supertest');
+var async = require('async');
 
 describe('ProductController', function() {
 
@@ -69,6 +70,53 @@ describe('ProductController', function() {
                     });
                 });    
             });            
+        });
+    });
+
+    describe('#removeProduct()', function() {
+        it('should return ok response', function (done) {
+
+            var createdCategoryId;
+            var createdProductId;
+
+            async.series([
+                function createCategory (callback) {
+                    Category.create({name: 'test'}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        createdCategoryId = created.id;
+                        callback();
+                    });
+                },
+
+                function createProduct (callback) {
+                    Product.create({name: 'test', category: createdCategoryId}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        createdProductId = created.id;
+                        callback();
+                    })
+                },
+
+                function runTest(callback) {
+                    request(sails.hooks.http.app)
+                    .post('/product/addProduct')
+                    .send({name: 'test', category: -1})
+                    .expect(400)
+                    .end(function (err, res) {
+                        if (err) return callback(err);
+                        callback();
+                    });                    
+                },
+
+                function cleanUpCategory(callback) {
+                    Category.destroy({id: createdCategoryId}).exec(function (err){
+                        if (err) return callback(err);
+                        callback();
+                    });                    
+                }
+            ], function (err, results) {
+                if (err) done(err);
+                done();
+            });
         });
     });
 
