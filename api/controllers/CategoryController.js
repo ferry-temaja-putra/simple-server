@@ -25,9 +25,14 @@ module.exports = {
 
     addChildCategory: function (req, res) {
 
+        var parent = req.body.parent;
+        var childCategoryName = req.body.childCategoryName;
+
+        if (parent === undefined) return res.badRequest('parent is required');
+
         var args = {
-            parent: req.body.parent,
-            childCategoryName: req.body.childCategoryName
+            parent: parent,
+            childCategoryName: childCategoryName
         };
 
         DomainCommands.handle(CategoryCommand.addChildCategoryCommand, args, function (err, created) {
