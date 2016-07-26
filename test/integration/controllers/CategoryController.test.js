@@ -106,4 +106,12 @@ describe('CategoryController', function() {
         });
     });
 
+    describe('#removeCategory()', function() {
+        it('should return OK response ', function (done) {
+            request(sails.hooks.http.app)
+            .post('/category/removeCategory')
+            .send({categoryId: 0})
+            .expect(200, done);
+        });
+    });
 });
