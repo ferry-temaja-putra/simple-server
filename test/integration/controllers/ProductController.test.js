@@ -1,4 +1,5 @@
 var request = require('supertest');
+var assert = require('chai').assert;
 var async = require('async');
 
 describe('ProductController', function() {
@@ -133,7 +134,16 @@ describe('ProductController', function() {
                         if (err) return callback(err);
                         callback();
                     });                    
+                },
+
+                function assertDeletedProduct(callback) {
+                    Product.findOne({id: createdProductId}).exec(function (err, result) {
+                        if (err) return callback(err);
+                        assert.isNotOk(result, 'product should be deleted');
+                        callback();
+                    });
                 }
+
             ], function (err, results) {
                 if (err) return done(err);
                 done();
