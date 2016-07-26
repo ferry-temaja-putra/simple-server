@@ -1,4 +1,5 @@
 var request = require('supertest');
+var assert = require('chai').assert
 
 describe('CategoryController', function() {
 
@@ -108,10 +109,26 @@ describe('CategoryController', function() {
 
     describe('#removeCategory()', function() {
         it('should return OK response ', function (done) {
-            request(sails.hooks.http.app)
-            .post('/category/removeCategory')
-            .send({categoryId: 0})
-            .expect(200, done);
+            Category.create({name: 'test'}).exec(function (err, createdCategory) {
+                if (err) done(err);
+
+                var deletedId = createdCategory.id;
+
+                request(sails.hooks.http.app)
+                .post('/category/removeCategory')
+                .send({categoryId: deletedId})
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) done(err);
+
+                    Category.findOne({id: deletedId}).exec(function (err, result) {
+                        if (err) done(err);
+
+                        assert.isNotOk(result, 'category should be deleted');
+                        done();
+                    });                    
+                });
+            })            
         });
     });
 });
