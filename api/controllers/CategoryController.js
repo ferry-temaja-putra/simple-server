@@ -13,6 +13,10 @@ module.exports = {
     addCategory: function (req, res) {
         var categoryName = req.body.categoryName;
 
+        if (categoryName === undefined || categoryName === '') {
+            return res.badRequest('category name is required');
+        }
+
         DomainCommands.handle(CategoryCommand.addCategoryCommand, categoryName, function (err, created) {
             if (err) return res.negotiate(err);
             return res.ok(created);

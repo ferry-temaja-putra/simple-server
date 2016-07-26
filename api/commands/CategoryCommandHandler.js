@@ -12,7 +12,13 @@ module.exports = {
         var parent = commandArgs.parent; 
         var childCategoryName = commandArgs.childCategoryName;
 
-        return Repository.addChildCategory(parent, childCategoryName, callback);
+        Repository.getCategory(parent, function (err, result) {
+            if (result === undefined) {
+                return callback({message:'parent is not found', status: 400});
+            }
+
+            return Repository.addChildCategory(parent, childCategoryName, callback);
+        });        
     },
 
     removeCategory: function (commandArgs, callback) {
