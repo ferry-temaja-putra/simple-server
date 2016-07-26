@@ -45,6 +45,10 @@ var getFilter = function (params) {
 module.exports = {
 
 	addProduct: function (req, res) {
+        
+        if (req.body.name === undefined || req.body.name === '') return res.badRequest('product name is required');
+        if (req.body.category === undefined) return res.badRequest('product category is required');
+
         DomainCommands.handle(ProductCommand.addProductCommand, req.body, function (err, created) {
             if (err) return res.negotiate(err);
             return res.json(created);

@@ -1,15 +1,24 @@
-var Repository = require('../repositories/ProductRepository.js');
+var ProductRepository = require('../repositories/ProductRepository.js');
+var CategoryRepository = require('../repositories/CategoryRepository.js');
 var ProductEvent = require('../events/ProductEvent.js');
 var DomainEvents = require('../events/DomainEvents.js');
 
 module.exports = {
     
     addProduct: function (commandArgs, callback) {
-        return Repository.addProduct(commandArgs, callback);
+        CategoryRepository.getCategory(commandArgs.category, function (err, category) {
+            if (err) return callback(err);
+
+            if (category === undefined) {
+                return callback({status: 400, message:'category is not found'});
+            }
+
+            return ProductRepository.addProduct(commandArgs, callback);
+        })
     }, 
 
     addInventory: function (commandArgs, callback) {
-        return Repository.addInventory(commandArgs, function (err, created) {
+        return ProductRepository.addInventory(commandArgs, function (err, created) {
             if (err) return callback(err);
 
             DomainEvents.publishEvent(ProductEvent.inventoryAddedEvent, created);
@@ -18,13 +27,13 @@ module.exports = {
     },
 
     listProduct: function (commandArgs, callback) {
-        return Repository.listProduct(commandArgs, callback);
+        return ProductRepository.listProduct(commandArgs, callback);
     },
 
     removeProduct: function (commandArgs, callback) {
         var removedProductId = commandArgs;
 
-        return Repository.removeProduct(commandArgs, function (err) {
+        return ProductRepository.removeProduct(commandArgs, function (err) {
             if (err) return callback(err);
 
             DomainEvents.publishEvent(ProductEvent.productRemovedEvent, removedProductId);
