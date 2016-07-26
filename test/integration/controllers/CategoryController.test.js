@@ -1,5 +1,6 @@
 var request = require('supertest');
-var assert = require('chai').assert
+var assert = require('chai').assert;
+var async = require('async');
 
 describe('CategoryController', function() {
 
@@ -14,18 +15,31 @@ describe('CategoryController', function() {
 
     describe('#addCategory()', function() {
         it('should return the created category', function (done) {
-            request(sails.hooks.http.app)
-            .post('/category/addCategory')
-            .send({ categoryName: 'test'})
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                // clean up the created data
-                Category.destroy({id: res.body.id}).exec(function (err) {
-                    if (err) return done(err);
-                    done();
-                });
+
+            var createdCategoryId;
+
+            async.series([
+                function runTest(callback) {
+                    request(sails.hooks.http.app)
+                    .post('/category/addCategory')
+                    .send({ categoryName: 'test'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) return callback(err);
+                        createdCategoryId = res.body.id;
+                        callback();
+                    });                    
+                },
+
+                function cleanUp(callback) {
+                    Category.destroy({id: createdCategoryId}).exec(function (err) {
+                        callback(err);
+                    });
+                }
+
+            ], function (err, results) {
+                done(err);
             });
         });
     });
@@ -87,48 +101,77 @@ describe('CategoryController', function() {
     describe('#addChildCategory()', function() {
         it('should return the created child category', function (done) {
 
-            Category.create({categoryName: 'parent'}).exec(function (err, createdParent) {
-                if (err) done(err);
+            var parentId;
+            var createdId;
 
-                request(sails.hooks.http.app)
-                .post('/category/addChildCategory')
-                .send({parent: createdParent.id, childCategoryName: 'child'})
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .end(function (err, res) {
-                    if (err) return done(err);
-                    // clean up the created data
-                    Category.destroy({id: [createdParent.id, res.body.id]}).exec(function (err) {
-                        if (err) return done(err);
-                        done();
+            async.series([
+                function createParent(callback) {
+                    Category.create({categoryName: 'parent'}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        parentId = created.id;
+                        callback();
                     });
-                });
-            });            
+                },
+
+                function runTest(callback) {
+                    request(sails.hooks.http.app)
+                    .post('/category/addChildCategory')
+                    .send({parent: parentId, childCategoryName: 'child'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        if (err) return callback(err);
+                        createdId = res.body.id;
+                        callback();
+                    });
+                },
+
+                function cleanUp(callback) {
+                    Category.destroy({id: [parentId, createdId]}).exec(function (err) {
+                        callback(err);
+                    });
+                }
+
+            ], function (err, results) {
+                done(err);
+            });      
         });
     });
 
     describe('#removeCategory()', function() {
         it('should return OK response ', function (done) {
-            Category.create({name: 'test'}).exec(function (err, createdCategory) {
-                if (err) done(err);
 
-                var deletedId = createdCategory.id;
+            var createdId;
 
-                request(sails.hooks.http.app)
-                .post('/category/removeCategory')
-                .send({categoryId: deletedId})
-                .expect(200)
-                .end(function (err, res) {
-                    if (err) done(err);
+            async.series([
+                function createCategory(callback) {
+                    Category.create({name: 'test'}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        createdId = created.id;
+                        callback();
+                    });
+                }, 
 
-                    Category.findOne({id: deletedId}).exec(function (err, result) {
-                        if (err) done(err);
-
-                        assert.isNotOk(result, 'category should be deleted');
-                        done();
+                function runTest(callback) {
+                    request(sails.hooks.http.app)
+                    .post('/category/removeCategory')
+                    .send({categoryId: createdId})
+                    .expect(200)
+                    .end(function (err, res) {
+                        callback(err);
                     });                    
-                });
-            })            
+                },
+
+                function assertDeletedCategory(callback) {
+                    Category.findOne({id: createdId}).exec(function (err, result) {
+                        if (err) return callback(err);
+                        assert.isNotOk(result, 'category should be deleted');
+                        callback();
+                    });
+                }
+            ], function (err, results) {
+                done(err);
+            });   
         });
     });
 });
