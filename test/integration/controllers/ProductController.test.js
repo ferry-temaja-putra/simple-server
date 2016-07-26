@@ -184,23 +184,13 @@ describe('ProductController', function() {
                 },
 
                 function cleanUpProduct(callback) {
-                    Product.destroy({id: createdProductId}).exec(function (err){
-                        if (err) return callback(err);
-                        callback();
-                    }); 
-                },
-
-                function cleanUpInventory(callback) {
-                    Inventory.destroy({product: createdProductId}).exec(function (err){
-                        if (err) return callback(err);
-                        callback();
-                    }); 
-                },
-
-                function cleanUpProductForRead(callback) {
-                    Productread.destroy({product: createdProductId}).exec(function (err){
-                        if (err) return callback(err);
-                        callback();
+                    // use api call to clean up product, inventories and productread entries
+                    request(sails.hooks.http.app)
+                    .post('/product/removeProduct')
+                    .send({productId: createdProductId})
+                    .expect(200)
+                    .end(function (err, res) {
+                        callback(err);
                     }); 
                 }
 
