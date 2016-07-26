@@ -88,7 +88,7 @@ describe('ProductController', function() {
                 }
 
             ], function (err, results) {
-                if (err) done(err);
+                if (err) return done(err);
                 done();
             });        
         });
@@ -135,45 +135,79 @@ describe('ProductController', function() {
                     });                    
                 }
             ], function (err, results) {
-                if (err) done(err);
+                if (err) return done(err);
                 done();
             });
         });
     });
 
-    // describe('#addInventory()', function() {
-    //     it('should return the created inventory', function (done) {
-    //         Category.create({name: 'test'}).exec(function (err, createdCategory) {
-    //             if (err) done(err);
+    describe('#addInventory()', function() {
+        it('should return the created inventory', function (done) {
 
-    //             Product.create({name: 'test', category: createdCategory.id}).exec(function (err, createdProduct) {
-    //                 request(sails.hooks.http.app)
-    //                 .post('/product/addInventory')
-    //                 .send({ product: createdProduct.id, size: 'medium', color: 'blue', price: 90000})
-    //                 .expect('Content-Type', /json/)
-    //                 .expect(200)
-    //                 .end(function (err, res) {
-    //                     if (err) return done(err);
-    //                     // clean up the created data
-    //                     Product.destroy({id: createdProduct.id}).exec(function (err) {
-    //                         if (err) return done(err);
+            var createdCategoryId;
+            var createdProductId;
 
-    //                         Category.destroy({id: createdCategory.id}).exec(function (err) {
-    //                             if (err) return done(err);
+            async.series([
 
-    //                             Inventory.destroy({id: res.body.id}).exec(function (err) {
-    //                                 if (err) return done(err);
+                function createCategory(callback) {
+                    Category.create({name: 'test'}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        createdCategoryId = created.id;
+                        callback();   
+                    });
+                },
 
-    //                                 Productread.destroy({product: createdProduct.id}).exec(function (err) {
-    //                                     if (err) return done(err);
-    //                                     done();
-    //                                 })
-    //                             });
-    //                         });
-    //                     });
-    //                 });                       
-    //             }); 
-    //         });            
-    //     });
-    // });
+                function createProduct(callback) {
+                    Product.create({name: 'test', category: createdCategoryId}).exec(function (err, created) {
+                        if (err) return callback(err);
+                        createdProductId = created.id;
+                        callback();   
+                    });
+                },
+
+                function runTest(callback) {
+                    request(sails.hooks.http.app)
+                    .post('/product/addInventory')
+                    .send({ product: createdProductId, size: 'medium', color: 'blue', price: 90000})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        callback(err);
+                    });
+                },
+
+                function cleanUpCategory(callback) {
+                    Category.destroy({id: createdCategoryId}).exec(function (err){
+                        if (err) return callback(err);
+                        callback();
+                    }); 
+                },
+
+                function cleanUpProduct(callback) {
+                    Product.destroy({id: createdProductId}).exec(function (err){
+                        if (err) return callback(err);
+                        callback();
+                    }); 
+                },
+
+                function cleanUpInventory(callback) {
+                    Inventory.destroy({product: createdProductId}).exec(function (err){
+                        if (err) return callback(err);
+                        callback();
+                    }); 
+                },
+
+                function cleanUpProductForRead(callback) {
+                    Productread.destroy({product: createdProductId}).exec(function (err){
+                        if (err) return callback(err);
+                        callback();
+                    }); 
+                }
+
+            ], function (err, results) {
+                if (err) return done(err);
+                done();
+            });            
+        });
+    });
 });

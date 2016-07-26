@@ -5,13 +5,19 @@ module.exports = {
     inventoryAdded: function (addedInventory) {
 
         Repository.getProduct(addedInventory.product, function (err, product) {
-            if (err) return err;
             
+            if (product === undefined) return;
+
+            if (err) return err;
+
+            var categoryName = '';
+            if (product.category) categoryName = product.category.name;
+
             var productForRead = {
                 product: product.id,
                 name: product.name,
                 description: product.description,
-                category: product.category.name,
+                category: categoryName,
                 inventory: addedInventory.id,
                 size: addedInventory.size,
                 color: addedInventory.color,
