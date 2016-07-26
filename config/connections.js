@@ -74,13 +74,13 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  PostgresqlServer: {
-    adapter: 'sails-postgresql',
-    host: 'ec2-54-243-203-93.compute-1.amazonaws.com',
-    user: 'kifydpglxqxhvt', // optional
-    password: 'LrZP4mPAFDDKpp6jfWWYTepScX', // optional
-    database: 'd9miuqug9s52rq' //optional
-  }
+  // PostgresqlServer: {
+  //   adapter: 'sails-postgresql',
+  //   host: 'ec2-54-243-203-93.compute-1.amazonaws.com',
+  //   user: 'kifydpglxqxhvt', // optional
+  //   password: '', // optional
+  //   database: 'd9miuqug9s52rq' //optional
+  // }
 
 
   /***************************************************************************
